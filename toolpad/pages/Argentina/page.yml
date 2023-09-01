@@ -1,0 +1,133 @@
+apiVersion: v1
+kind: page
+spec:
+  id: f8oRkwp
+  title: Dolar Hoy
+  content:
+    - component: Container
+      name: container
+      layout:
+        columnSize: 1
+      children:
+        - component: Text
+          name: text
+          layout:
+            horizontalAlign: center
+            verticalAlign: center
+          props:
+            value: ¿Cuánto está el dolar en Argentina?
+            mode: text
+            sx: 12
+            variant: h2
+          children: []
+    - component: Text
+      name: text1
+      children: []
+      props:
+        value: 🇦🇷 Dólar oficial
+        variant: h4
+    - component: PageRow
+      name: pageRow1
+      children:
+        [
+          {
+              component: Metric,
+              name: oficial_compra,
+              layout: { columnSize: 0.9991258741258742 },
+              props:
+                {
+                  fullWidth: true,
+                  label: 🇦🇷 La compra del dólar oficial hoy está,
+                  value:
+                    {
+                      $$jsExpression: "parseFloat(dolarasiQuery.data[0][1].casa.compra)\n"
+                    },
+                  numberFormat: { kind: currency, currency: ARS }
+                },
+              children: []
+            },
+          {
+              component: Metric,
+              name: oficial_venta,
+              layout: { columnSize: 1.0008741258741258 },
+              props:
+                {
+                  label: 🇦🇷 La venta del dólar oficial hoy está,
+                  value:
+                    {
+                      $$jsExpression: "parseFloat(dolarasiQuery.data[0][1].casa.venta)\n"
+                    },
+                  fullWidth: true,
+                  numberFormat: { kind: currency, currency: ars }
+                },
+              children: []
+            }
+        ]
+      props:
+        justifyContent: start
+    - component: Metric
+      name: metric
+      children: []
+      props:
+        value:
+          $$jsExpression: >
+            parseFloat(dolarasiQuery.data[0][1].casa.variacion.replace(/,/g,
+            "."))
+        fullWidth: true
+        label: Esto supone una variación del
+        numberFormat:
+          kind: preset
+          preset: percent
+        caption: con respecto a ayer
+    - component: Text
+      name: text2
+      children: []
+      props:
+        value: 💵 Dólar Blue
+        variant: h4
+    - component: PageRow
+      name: pageRow
+      children:
+        [
+          {
+              component: Metric,
+              name: metric1,
+              children: [],
+              props:
+                {
+                  fullWidth: true,
+                  label: 💵 La compra del dólar blue hoy está,
+                  value:
+                    {
+                      $$jsExpression: "parseFloat(dolarasiQuery.data[1][1].casa.compra)\n"
+                    }
+                }
+            },
+          {
+              component: Metric,
+              name: metric2,
+              children: [],
+              props:
+                {
+                  fullWidth: true,
+                  label: 💵 La venta del dólar blue hoy está,
+                  value:
+                    {
+                      $$jsExpression: "parseFloat(dolarasiQuery.data[1][1].casa.venta)\n"
+                    }
+                }
+            }
+        ]
+      props:
+        justifyContent: start
+  queries:
+    - name: dolarasiQuery
+      query:
+        kind: rest
+        url: https://www.dolarsi.com/api/api.php?type=valoresprincipales
+        headers: []
+        method: GET
+        transform: return Object.entries(data)
+        transformEnabled: true
+        searchParams: []
+  display: shell
