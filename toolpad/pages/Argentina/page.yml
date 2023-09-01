@@ -66,19 +66,19 @@ spec:
       props:
         justifyContent: start
     - component: Metric
-      name: metric
+      name: oficial_var
       children: []
       props:
         value:
           $$jsExpression: >
             parseFloat(dolarasiQuery.data[0][1].casa.variacion.replace(/,/g,
-            "."))
+            ".") * 0.01)
         fullWidth: true
         label: Esto supone una variación del
+        caption: con respecto a ayer
         numberFormat:
           kind: preset
           preset: percent
-        caption: con respecto a ayer
     - component: Text
       name: text2
       children: []
@@ -120,6 +120,28 @@ spec:
         ]
       props:
         justifyContent: start
+    - component: Metric
+      name: blue_var
+      children: []
+      props:
+        fullWidth: true
+        label: Esto supone una variación del
+        value:
+          $$jsExpression: >
+            parseFloat(dolarasiQuery.data[1][1].casa.variacion.replace(/,/g,
+            ".") * 0.01)
+        numberFormat:
+          kind: preset
+          preset: percent
+    - component: TextField
+      name: textField
+      children: []
+    - component: Text
+      name: text3
+      children: []
+      props:
+        value: Información obtenida de la API de [Dolar$i](https://www.dolarsi.com/)
+        mode: markdown
   queries:
     - name: dolarasiQuery
       query:
