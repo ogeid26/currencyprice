@@ -4,22 +4,17 @@ spec:
   id: f8oRkwp
   title: Dolar Hoy
   content:
-    - component: Container
-      name: container
+    - component: Text
+      name: text
+      children: []
+      props:
+        value: ¿Cuánto está el dolar en Argentina?
+        variant: h2
+        mode: text
+        sx: 12
       layout:
-        columnSize: 1
-      children:
-        - component: Text
-          name: text
-          layout:
-            horizontalAlign: center
-            verticalAlign: center
-          props:
-            value: ¿Cuánto está el dolar en Argentina?
-            mode: text
-            sx: 12
-            variant: h2
-          children: []
+        horizontalAlign: center
+        verticalAlign: center
     - component: Text
       name: text1
       children: []
@@ -92,7 +87,6 @@ spec:
           {
               component: Metric,
               name: metric1,
-              children: [],
               props:
                 {
                   fullWidth: true,
@@ -101,12 +95,12 @@ spec:
                     {
                       $$jsExpression: "parseFloat(dolarasiQuery.data[1][1].casa.compra)\n"
                     }
-                }
+                },
+              children: []
             },
           {
               component: Metric,
               name: metric2,
-              children: [],
               props:
                 {
                   fullWidth: true,
@@ -115,7 +109,8 @@ spec:
                     {
                       $$jsExpression: "parseFloat(dolarasiQuery.data[1][1].casa.venta)\n"
                     }
-                }
+                },
+              children: []
             }
         ]
       props:
@@ -124,24 +119,21 @@ spec:
       name: blue_var
       children: []
       props:
-        fullWidth: true
-        label: Esto supone una variación del
         value:
           $$jsExpression: >
             parseFloat(dolarasiQuery.data[1][1].casa.variacion.replace(/,/g,
             ".") * 0.01)
+        fullWidth: true
+        label: Esto supone una variación del
         numberFormat:
           kind: preset
           preset: percent
-    - component: TextField
-      name: textField
-      children: []
     - component: Text
       name: text3
-      children: []
       props:
         value: Información obtenida de la API de [Dolar$i](https://www.dolarsi.com/)
         mode: markdown
+      children: []
   queries:
     - name: dolarasiQuery
       query:
